@@ -89,4 +89,6 @@ Year   month	day
     3. Since the project is done in amazon cloud, it utilize the Lamda function service to trigger a spark python process everyday to update the dashboard.
 
 #### The database needed to be accessed by 100+ people.
-    1. The dataset can be migrate to Redshift which provides cheap and faster than other data wirehouse due to its abitlity to utilize Amazon EMR, Sagemaker, Athena, and S3.
+1. The dataset can be migrate to Redshift which provides cheap and faster than other data wirehouse due to its abitlity to utilize Amazon EMR, Sagemaker, Athena, and S3.
+ 
+[blog post](https://yinkin.ziruoinc.com/data_engineering/bigdata)
