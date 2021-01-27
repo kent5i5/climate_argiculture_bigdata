@@ -1,6 +1,7 @@
 # Scope the Project and Gather Data
 The goal of this project to create a Extract Transform Load(ETL) data process on the global city climate change dataset from Kaggle. For data process, apache spark hosted in Amazon EMR cluster is used to organize data into STAR schema which consist of fact and dimension tables. 
 
+[blog post](https://yinkin.ziruoinc.com/data_engineering/bigdata)
 
 #### The choice of tools and technologies for the project
     * The reasons Apache Spark is chosen:
@@ -53,6 +54,9 @@ Global-food-agriculture-statistics is recorded by year while GlobalLandTemperatu
 * Problem 3
 Most value_footnotes has null value and I think it is ok to drop this column
 
+* Problem 4 
+Climate dataset has country, city, geopoint while argiculture dataset has country_or_area(regrion). 
+Therefore, I created a custom spark function to convert the country to region to match the data in argiculture dataset
 
 #  Define the Data Model
 
@@ -81,7 +85,10 @@ Year   month	day
 ***Most nouns are dimension***
 
 ***Data Dictionary available in argiculture_climate.ipynb***
-            
+
+#### Connect the EMR through ssh and excutes the etl.py script 
+    /usr/bin/spark-submit --master yarn path_to_python_script/etl.py
+
 #### Approaches to problems under the following scenarios:
 * The data was increased by 100x.
     1. Spark is built with scalabilty in mind and it could increase the number of nodes in our cluster in demand.
@@ -92,3 +99,29 @@ Year   month	day
 1. The dataset can be migrate to Redshift which provides cheap and faster than other data wirehouse due to its abitlity to utilize Amazon EMR, Sagemaker, Athena, and S3.
  
 [blog post](https://yinkin.ziruoinc.com/data_engineering/bigdata)
+
+#### Data Quality Checks
+Explain the data quality checks you'll perform to ensure the pipeline ran as expected. These could include:
+ * Integrity constraints on the relational database (e.g., unique key, data type, etc.)
+ * Unit tests for the scripts to ensure they are doing the right thing
+ * Source/Count checks to ensure completeness
+ 
+#### Run Quality Checks
+***Table Schema and count with spark functions***
+    places_table.show()
+    places_table.count()
+
+![place check](https://s3-us-west-2.amazonaws.com/yinkin.ziruoinc.com/images/places.png)	
+
+
+    element_table.show()
+    element_table.count()
+
+![element check](https://s3-us-west-2.amazonaws.com/yinkin.ziruoinc.com/images/material.png)
+
+
+    climate_argi_table.show()
+    climate_argi_table.count()
+
+![climate argiculture check](https://s3-us-west-2.amazonaws.com/yinkin.ziruoinc.com/images/climate_argi_table.png)
+
